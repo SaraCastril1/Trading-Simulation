@@ -1,22 +1,7 @@
 import sys
 import os
+import gc
 from Scanner import Scanner
-import plotly.graph_objects as go
-
-
-# def crear_grafico(timestamp, open_price, high_price, low_price, close_price):
-#     # Crear el gráfico de velas japonesas
-#     #fig = go.Figure()fig.add_trace
-#     fig = go.Figure(data=[go.Candlestick(x=[timestamp],
-#                                           open=[open_price],
-#                                           high=[high_price],
-#                                           low=[low_price],
-#                                           close=[close_price])])
-
-
-#     fig.show()
-
-
     
 
 
@@ -65,6 +50,10 @@ def main():
     else:
         print("Formato de archivo NO valido.")
         return(1)
+
+    del scanner    # Liberar manualmente el objeto lector
+    gc.collect()  # Invocar al recolector de basura
+    print("Se ha eliminado el scanner csv de la memoria")
 
 
 
