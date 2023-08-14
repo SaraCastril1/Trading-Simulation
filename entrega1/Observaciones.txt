@@ -1,8 +1,12 @@
 PENDIENTES:
 
-1. UNA SOLA PÀGINA WEB
-2. MOVILE AVARAGE
-3. ULTIMO DATO
+1. MOVILE AVARAGE
+2. Eliminar datos utilizados
+3. Eltimo datos --> Grafica y array
+4. Archivo config
+5. Documentacion
+
+
 
 
 IMPORTANTE:
