@@ -36,7 +36,8 @@ La primera entrega del proyecto está dividida en dos partes. Por un lado está 
 
 Por otra parte tenemos una version paralela, la cual funciona a través de sockets con una arquitectura tipo Cliente/Servidor. Donde dividimos nuestros procesos en dos y cada uno se encarga de uno de ellos; La lectura de los datos, y la visualización. El proceso de lectura se encarga de leer 10 lineas del archivo y  almacerlas en una estructura de datos que luego será enviada al proceso visualizar a traves de sockets; Este proceso las empezará a mostrar en pantalla mientras que el proceso de lectura se encarga de leer otras 10 lineas y luego enviarlas. Esta versión no está funcionando de la manera esperada por el momento.
 
-![Alt text](Entrega 1/Paralelo/Paralelo.png)
+![Alt text](![image](https://github.com/SaraCastril1/Trading-Simulation/assets/84990901/e2270fd0-3b04-4d76-8d3f-d91d36c0333f)
+)
 
 
 ## Dificultades y Posibles Mejoras:
