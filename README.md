@@ -32,8 +32,7 @@ durante el semestre.
 
 La primera entrega del proyecto está dividida en dos partes. Por un lado está la carpeta secuencial, el cual recive los datos de las velas que debe graficar a través de un json o un csv. Almacena cada linea leida en un array para luego graficarlas y calcular el promedio movil, haciendo una simulación en tiempo real.
 
-Por otra parte tenemos una version paralela, la cual funciona a través de sockets.
-Dividimos nuestros procesos en dos; La lectura de los datos, y la visualización. El proceso de lectura se encarga de leer 10 lineas del archivo y  almacerlas en una estructura de datos que luego será enviada al proceso visualizar a traves de sockets; Este proceso las empezará a mostrar en pantalla mientras que el proceso de lectura se encarga de leer otras 10 lineas y luego enviarlas. Esta versión no está funcionando de la manera esperada por el momento.
+Por otra parte tenemos una version paralela, la cual funciona a través de sockets con una arquitectura tipo Cliente/Servidor. Donde dividimos nuestros procesos en dos y cada uno se encarga de uno de ellos; La lectura de los datos, y la visualización. El proceso de lectura se encarga de leer 10 lineas del archivo y  almacerlas en una estructura de datos que luego será enviada al proceso visualizar a traves de sockets; Este proceso las empezará a mostrar en pantalla mientras que el proceso de lectura se encarga de leer otras 10 lineas y luego enviarlas. Esta versión no está funcionando de la manera esperada por el momento.
 
 ## Dificultades y Posibles Mejoras:
 
