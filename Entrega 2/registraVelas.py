@@ -1,7 +1,7 @@
 import os
 from celery import Celery, shared_task
 from dotenv import load_dotenv
-import datetime
+from datetime import time
 import sqlite3
 import json
 
@@ -23,3 +23,17 @@ registro.execute('''CREATE TABLE IF NOT EXISTS registro
 def registrar(comando):
 	with registro:
 		resultado = registro.execute("SELECT REPETICIONES FROM REGISTRO where comando = \"{}\"".format(comando)).fetchall()
+		print(resultado)
+		if resultado:
+			#Prueba almacenar varias veces durante 30 segundos sin bloquear el cliente
+			cuantos = resultado[0][0]
+		print("Comandos{} -> {}".format(comando, cuantos))
+		for x in range(0,30):
+			try:
+				with registro:
+					registro.execute("INSERT OR REPLACE INTO registro(repeticiones, comando) VALUES({},\"{}\");".format(cuantos+1, comando))
+			except:
+				time.sleep(1)
+				pass
+			finally:
+				break
