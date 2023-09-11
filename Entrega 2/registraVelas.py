@@ -20,4 +20,6 @@ registro.execute('''CREATE TABLE IF NOT EXISTS registro
 
 #Declara la tarea
 @shared_task #Función que devuelve otra función
-def registro(comando):
+def registrar(comando):
+	with registro:
+		resultado = registro.execute("SELECT REPETICIONES FROM REGISTRO where comando = \"{}\"".format(comando)).fetchall()
