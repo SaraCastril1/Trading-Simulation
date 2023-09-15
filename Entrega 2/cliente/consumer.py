@@ -1,30 +1,89 @@
 import pika
 import os
 import json
+#import time
 from dotenv import load_dotenv
-from chart import Chart
 
-def on_message_received_wrapper(chart):
-    def on_message_received(ch, method, properties, body):
-        print("Received{}".format(body))
-        try:
-            message = json.loads(body)
-            
-            # Procesa el mensaje y genera la gráfica de vela
-            chart.data.append(message)
-            chart.graficar_velas_japonesas()
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from matplotlib.animation import FuncAnimation
+from mplfinance.original_flavor import candlestick_ohlc
+import datetime
+import numpy as np
 
-            # Confirma el mensaje (ACK) para eliminarlo de la cola
-            ch.basic_ack(delivery_tag=method.delivery_tag)
-        except Exception as e:
-            print("Error al procesar el mensaje:", str(e))
-    return on_message_received
+#Variables GLOBALES para el CHART -----------------------------------------------
+data = []
+fig, ax = plt.subplots()
+index = 0
 
+# CHART ---------------------------------------------------
+
+def animate(i):
+    global data, fig, ax, index
+    #plt.ion()
+    if index < len(data):
+        ax.clear()
+        segmento_data = data[:index+1]
+        if len(segmento_data) >= 20:  # Si hay 20 datos
+            del segmento_data[0] 
+            del data[0]
+        else:
+            pass
+        
+        fechas = [item['Fecha'] if isinstance(item['Fecha'], datetime.datetime) else datetime.datetime.strptime(item['Fecha'], '%Y-%m-%d %H:%M:%S') for item in segmento_data]
+        fechas_num = mdates.date2num(fechas)
+        quotes = [(fechas_num[i], float(item['Apertura']), float(item['Alto']), float(item['Bajo']), float(item['Cierre'])) for i, item in enumerate(segmento_data)]
+        
+        # Calculate the SMA of 5 and 13 periods
+        cierres = [float(item['Cierre']) for item in segmento_data]
+        sma5 = np.convolve(cierres, np.ones(5)/5, mode='valid')
+        sma13 = np.convolve(cierres, np.ones(13)/13, mode='valid')
+        
+        ax.xaxis_date()
+        ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d %H:%M:%S"))
+        plt.xticks(rotation=45)
+        
+        candlestick_ohlc(ax, quotes, width=0.01, colorup='g', colordown='r')
+        
+        # Plot the SMA
+        if index >= 4:  # Only plot the 5-period SMA if there are at least 5 data points
+            ax.plot(fechas_num[4:index+1], sma5, label='SMA 5', color='blue')
+            # Show the legend
+            ax.legend()
+        if index >= 12:  # Only plot the 13-period SMA if there are at least 13 data points
+            ax.plot(fechas_num[12:index+1], sma13, label='SMA 13', color='orange')
+            # Show the legend
+            ax.legend()
+        
+        
+        index += 1
+
+
+def graficar_velas_japonesas():
+    global data, fig, ax
+    try:
+        ani = FuncAnimation(fig, animate, interval=1000, repeat=False)
+        plt.show()
+    except KeyboardInterrupt:
+        print("Interrupted by user. Closing the plot...")
+        plt.close(fig)
+
+# ---------------------------------------------------------
+
+
+
+def on_message_received(ch, method, properties, body):
+    global data
+    message = json.loads(body)
+    data.append(message)
+    print("message received{}: ".format(message))
+    graficar_velas_japonesas()
+    #time.sleep(3)
 
 
 def main():
+    global data, fig, ax
 
-    chart = Chart()
 # VARIABLES DE ENTORNO -----------------------------------------------
     load_dotenv()
     # Obtener valores de variables de entorno
@@ -33,6 +92,7 @@ def main():
     rabbitmq_virtual_host = os.environ.get("RABBITMQ_VIRTUAL_HOST")
     rabbitmq_username = os.environ.get("RABBITMQ_USERNAME")
     rabbitmq_password = os.environ.get("RABBITMQ_PASSWORD")
+
 
 # RabbitMQ -----------------------------------------------------------
 
@@ -49,14 +109,18 @@ def main():
     #Declare my queue
     channel.queue_declare(queue= "candles")
 
-    channel.basic_consume(queue= 'candles', auto_ack=True, on_message_callback=on_message_received_wrapper(chart))
-
+    channel.basic_consume(queue= 'candles', auto_ack=True, on_message_callback=on_message_received)
+    
     print("Esperando mensajes... Presiona Ctrl+C para salir.")
     channel.start_consuming()
+    
     
 
 # GRAFICO
 
 
 if __name__ == "__main__":
+    #data = []
+    #fig, ax = plt.subplots()
+    #index = 0
     main()

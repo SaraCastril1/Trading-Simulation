@@ -1,2 +1,4 @@
 python-dotenv
 pika
+mathplotlib
+mplfinace
