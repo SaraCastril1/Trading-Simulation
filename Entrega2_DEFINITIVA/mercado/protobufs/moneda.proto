@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+message file_request{
+    string file = 1;
+}
+
+message file_response{
+	bool file = 1;
+	repeated string coincidence = 2;
+
+}
+
+message list_response{
+	repeated string file = 1;
+}
+service File{
+	rpc Find_file(file_request) returns (file_response);
+    rpc List_file(file_request) returns (list_response);
+}
