@@ -6,19 +6,20 @@ import grpc
 import moneda_pb2
 import moneda_pb2_grpc
 
+# Variables globales 
+moneda = None
+periodo = None
 
 # CONEXIÓN CON EL CLIENTE ------------------------------------------------------------------------
 
 class Parameters(moneda_pb2_grpc.ParametersServicer):
 
-    def __init__(self) -> None:
-        self.moneda = None
-        self.periodo = None
-
     def send_parameters(self, request, context):
 
-        self.moneda = request.moneda
-        self.periodo = request.periodo
+        global moneda, periodo
+
+        moneda = request.moneda
+        periodo = request.periodo
 
         # Realiza el procesamiento necesario con moneda y período aquí.
         # Puedes agregar tu lógica de procesamiento personalizada.
