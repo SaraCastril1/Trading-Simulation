@@ -12,8 +12,8 @@ import moneda_pb2_grpc
 class Parameters(moneda_pb2_grpc.ParametersServicer):
 
     def __init__(self) -> None:
-        self.moneda
-        self.periodo
+        self.moneda = None
+        self.periodo = None
 
     def send_parameters(self, request, context):
 
