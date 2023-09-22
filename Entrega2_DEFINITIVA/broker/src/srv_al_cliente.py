@@ -23,8 +23,8 @@ class Parameters(moneda_pb2_grpc.ParametersServicer):
 
         # Realiza el procesamiento necesario con moneda y período aquí.
         # Puedes agregar tu lógica de procesamiento personalizada.
-        print("Moneda recivida: ", self.moneda)
-        print("Periodo recivida: ", self.periodo)
+        print("Moneda recivida: ", moneda)
+        print("Periodo recivida: ", periodo)
 
         # Envía una respuesta de confirmación (ACK).
         response = moneda_pb2.ACK(ack=True)
