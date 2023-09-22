@@ -1,8 +1,5 @@
 from concurrent import futures
 
-from srv_al_cliente import Parameters
-import sys
-import os
 import grpc
 from dotenv import load_dotenv
 import moneda_pb2
@@ -15,12 +12,12 @@ def send_parameters(stub, moneda, periodo):
 
 
 
-def serve(HOST, moneda, periodo):
+def server(HOST, moneda, periodo):
     # LEVANTA LA CONEXIÓN CON EL MERCADO ---------------------------------------------------------
     with grpc.insecure_channel(HOST) as channel:
         stub = moneda_pb2_grpc.ParametersStub(channel)
 
-        send_parameters(stub,parsed_args["-m"], parsed_args["-p"])
+        send_parameters(stub,moneda, periodo)
     
 
 
