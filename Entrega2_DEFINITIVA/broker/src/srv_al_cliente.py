@@ -30,12 +30,12 @@ class Parameters(moneda_pb2_grpc.ParametersServicer):
         response = moneda_pb2.ACK(ack=True)
         return response
 
-def server(HOST):
+def server(PORT):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=20))
     moneda_pb2_grpc.add_ParametersServicer_to_server(Parameters(), server)
 
     # Cambia la dirección y el puerto según tus necesidades.
-    server.add_insecure_port(HOST)
+    server.add_insecure_port(PORT)
     server.start()
     print("Broker en ejecución en el puerto 50051...")
     server.wait_for_termination()
