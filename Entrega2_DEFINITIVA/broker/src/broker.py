@@ -1,5 +1,5 @@
 import srv_al_cliente
-import consume_al_mercado
+#import consume_al_mercado
 from dotenv import load_dotenv
 import os
 
@@ -11,8 +11,8 @@ if __name__ == '__main__':
     # Recibe la comunicación del cliente
     srv_al_cliente.server(PORT)
 
-    # Levanta la comunicación con el mercado
-    moneda = srv_al_cliente.moneda
-    periodo = srv_al_cliente.periodo
-    print('YA VOY A LLAMAR AL MERCADO CO LOS SIGUIENTES PARAMETROS', moneda, periodo)
-    consume_al_mercado.server(HOST_MERCADO, moneda, periodo)
+    # # Levanta la comunicación con el mercado
+    # moneda = srv_al_cliente.moneda
+    # periodo = srv_al_cliente.periodo
+    # print('YA VOY A LLAMAR AL MERCADO CO LOS SIGUIENTES PARAMETROS', moneda, periodo)
+    # consume_al_mercado.server(HOST_MERCADO, moneda, periodo)

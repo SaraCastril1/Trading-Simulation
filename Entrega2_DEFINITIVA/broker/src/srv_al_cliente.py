@@ -1,4 +1,7 @@
 from concurrent import futures
+import consume_al_mercado
+from dotenv import load_dotenv
+import os
 
 import grpc
 #import os
@@ -25,6 +28,10 @@ class Parameters(moneda_pb2_grpc.ParametersServicer):
         # Puedes agregar tu lógica de procesamiento personalizada.
         print("Moneda recivida: ", moneda)
         print("Periodo recivida: ", periodo)
+
+        # # Levanta la comunicación con el mercado
+        print('YA VOY A LLAMAR AL MERCADO CO LOS SIGUIENTES PARAMETROS', moneda, periodo)
+        consume_al_mercado.server(os.environ.get("HOST_MERCADO"), moneda, periodo)
 
         # Envía una respuesta de confirmación (ACK).
         response = moneda_pb2.ACK(ack=True)
