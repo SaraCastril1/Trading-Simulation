@@ -5,5 +5,5 @@ import os
 
 if __name__ == '__main__':
     load_dotenv()
-    HOST = os.environ.get("HOST_MERCADO")
+    HOST = os.environ.get("HOST_BROKER")
     srv_al_cliente.server(HOST)
