@@ -1,0 +1,45 @@
+from concurrent import futures
+
+import grpc
+#import os
+#from dotenv import load_dotenv
+import moneda_pb2
+import moneda_pb2_grpc
+
+
+# CONEXIÓN CON EL CLIENTE ------------------------------------------------------------------------
+
+class Parameters(moneda_pb2_grpc.ParametersServicer):
+
+    def __init__(self) -> None:
+        self.moneda
+        self.periodo
+
+    def send_parameters(self, request, context):
+
+        self.moneda = request.moneda
+        self.periodo = request.periodo
+
+        # Realiza el procesamiento necesario con moneda y período aquí.
+        # Puedes agregar tu lógica de procesamiento personalizada.
+        print("Moneda recivida: ", self.moneda)
+        print("Periodo recivida: ", self.periodo)
+
+        # Envía una respuesta de confirmación (ACK).
+        response = moneda_pb2.ACK(ack=True)
+        return response
+
+def server(HOST):
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=20))
+    moneda_pb2_grpc.add_ParametersServicer_to_server(Parameters(), server)
+
+    # Cambia la dirección y el puerto según tus necesidades.
+    server.add_insecure_port(HOST)
+    server.start()
+    print("Broker en ejecución en el puerto 50051...")
+    server.wait_for_termination()
+
+# if __name__ == '__main__':
+#     load_dotenv()
+#     HOST = os.environ.get("HOST") 
+#     server(HOST)

@@ -5,11 +5,12 @@ message message_parameters{
     string periodo = 2;
 }
 
-message ACK_parameters{
+message ACK{
     bool ack = 1;
 }
 
 
 service Parameters{
-	rpc send_parameters(message_parameters) returns (ACK_parameters);
+	rpc send_parameters(message_parameters) returns (ACK);
 }
+
