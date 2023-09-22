@@ -1,19 +1,16 @@
 syntax = "proto3";
 
-message file_request{
-    string file = 1;
+message message_parameters{
+    string moneda = 1;
+    string periodo = 2;
 }
 
-message file_response{
-	bool file = 1;
-	repeated string coincidence = 2;
-
+message ACK{
+    bool ack = 1;
 }
 
-message list_response{
-	repeated string file = 1;
+
+service Parameters{
+	rpc send_parameters(message_parameters) returns (ACK);
 }
-service File{
-	rpc Find_file(file_request) returns (file_response);
-    rpc List_file(file_request) returns (list_response);
-}
+
