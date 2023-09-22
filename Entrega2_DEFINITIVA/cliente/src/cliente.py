@@ -42,7 +42,7 @@ def main():
 # ELEGIR PARAMETROS PARA ENVIARLOS AL BROKER  -----------------------------------------------------------
     # sys.argv[0] es el nombre del script en sí mismo, los argumentos comienzan desde sys.argv[1]
     load_dotenv()
-    HOST = os.environ.get("HOST")   
+    HOST = os.environ.get("HOST_BROKER")   
 
     if len(sys.argv) > 2:
         serve(HOST)
