@@ -10,6 +10,10 @@ def send_parameters(stub, moneda, periodo):
     response = stub.send_parameters(request)
     print("ACK:", response.ack)
 
+def conexion_up(stub):
+    request = moneda_pb2.ping()
+    response = stub.send_parameters(request)
+    print("ACK:", response.ack)
 
 
 def server(HOST, moneda, periodo):
@@ -17,7 +21,8 @@ def server(HOST, moneda, periodo):
     with grpc.insecure_channel(HOST) as channel:
         stub = moneda_pb2_grpc.ParametersStub(channel)
 
-        send_parameters(stub,moneda, periodo)
+        conexion_up(stub)
+        #send_parameters(stub,moneda, periodo)
     
 
 

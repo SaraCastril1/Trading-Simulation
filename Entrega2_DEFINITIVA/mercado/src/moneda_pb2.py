@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cmoneda.proto\"\x1c\n\x0c\x66ile_request\x12\x0c\n\x04\x66ile\x18\x01 \x01(\t\"2\n\rfile_response\x12\x0c\n\x04\x66ile\x18\x01 \x01(\x08\x12\x13\n\x0b\x63oincidence\x18\x02 \x03(\t\"\x1d\n\rlist_response\x12\x0c\n\x04\x66ile\x18\x01 \x03(\t2^\n\x04\x46ile\x12*\n\tFind_file\x12\r.file_request\x1a\x0e.file_response\x12*\n\tList_file\x12\r.file_request\x1a\x0e.list_responseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cmoneda.proto\"5\n\x12message_parameters\x12\x0e\n\x06moneda\x18\x01 \x01(\t\x12\x0f\n\x07periodo\x18\x02 \x01(\t\"\x06\n\x04ping\"\x12\n\x03\x41\x43K\x12\x0b\n\x03\x61\x63k\x18\x01 \x01(\x08\x32V\n\nParameters\x12\x1a\n\x0b\x63onexion_up\x12\x05.ping\x1a\x04.ACK\x12,\n\x0fsend_parameters\x12\x13.message_parameters\x1a\x04.ACKb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -21,12 +21,12 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'moneda_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _globals['_FILE_REQUEST']._serialized_start=16
-  _globals['_FILE_REQUEST']._serialized_end=44
-  _globals['_FILE_RESPONSE']._serialized_start=46
-  _globals['_FILE_RESPONSE']._serialized_end=96
-  _globals['_LIST_RESPONSE']._serialized_start=98
-  _globals['_LIST_RESPONSE']._serialized_end=127
-  _globals['_FILE']._serialized_start=129
-  _globals['_FILE']._serialized_end=223
+  _globals['_MESSAGE_PARAMETERS']._serialized_start=16
+  _globals['_MESSAGE_PARAMETERS']._serialized_end=69
+  _globals['_PING']._serialized_start=71
+  _globals['_PING']._serialized_end=77
+  _globals['_ACK']._serialized_start=79
+  _globals['_ACK']._serialized_end=97
+  _globals['_PARAMETERS']._serialized_start=99
+  _globals['_PARAMETERS']._serialized_end=185
 # @@protoc_insertion_point(module_scope)

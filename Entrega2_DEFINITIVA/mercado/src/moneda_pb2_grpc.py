@@ -5,7 +5,7 @@ import grpc
 import moneda_pb2 as moneda__pb2
 
 
-class FileStub(object):
+class ParametersStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -14,58 +14,58 @@ class FileStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.Find_file = channel.unary_unary(
-                '/File/Find_file',
-                request_serializer=moneda__pb2.file_request.SerializeToString,
-                response_deserializer=moneda__pb2.file_response.FromString,
+        self.conexion_up = channel.unary_unary(
+                '/Parameters/conexion_up',
+                request_serializer=moneda__pb2.ping.SerializeToString,
+                response_deserializer=moneda__pb2.ACK.FromString,
                 )
-        self.List_file = channel.unary_unary(
-                '/File/List_file',
-                request_serializer=moneda__pb2.file_request.SerializeToString,
-                response_deserializer=moneda__pb2.list_response.FromString,
+        self.send_parameters = channel.unary_unary(
+                '/Parameters/send_parameters',
+                request_serializer=moneda__pb2.message_parameters.SerializeToString,
+                response_deserializer=moneda__pb2.ACK.FromString,
                 )
 
 
-class FileServicer(object):
+class ParametersServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def Find_file(self, request, context):
+    def conexion_up(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def List_file(self, request, context):
+    def send_parameters(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_FileServicer_to_server(servicer, server):
+def add_ParametersServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Find_file': grpc.unary_unary_rpc_method_handler(
-                    servicer.Find_file,
-                    request_deserializer=moneda__pb2.file_request.FromString,
-                    response_serializer=moneda__pb2.file_response.SerializeToString,
+            'conexion_up': grpc.unary_unary_rpc_method_handler(
+                    servicer.conexion_up,
+                    request_deserializer=moneda__pb2.ping.FromString,
+                    response_serializer=moneda__pb2.ACK.SerializeToString,
             ),
-            'List_file': grpc.unary_unary_rpc_method_handler(
-                    servicer.List_file,
-                    request_deserializer=moneda__pb2.file_request.FromString,
-                    response_serializer=moneda__pb2.list_response.SerializeToString,
+            'send_parameters': grpc.unary_unary_rpc_method_handler(
+                    servicer.send_parameters,
+                    request_deserializer=moneda__pb2.message_parameters.FromString,
+                    response_serializer=moneda__pb2.ACK.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'File', rpc_method_handlers)
+            'Parameters', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class File(object):
+class Parameters(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def Find_file(request,
+    def conexion_up(request,
             target,
             options=(),
             channel_credentials=None,
@@ -75,14 +75,14 @@ class File(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/File/Find_file',
-            moneda__pb2.file_request.SerializeToString,
-            moneda__pb2.file_response.FromString,
+        return grpc.experimental.unary_unary(request, target, '/Parameters/conexion_up',
+            moneda__pb2.ping.SerializeToString,
+            moneda__pb2.ACK.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def List_file(request,
+    def send_parameters(request,
             target,
             options=(),
             channel_credentials=None,
@@ -92,8 +92,8 @@ class File(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/File/List_file',
-            moneda__pb2.file_request.SerializeToString,
-            moneda__pb2.list_response.FromString,
+        return grpc.experimental.unary_unary(request, target, '/Parameters/send_parameters',
+            moneda__pb2.message_parameters.SerializeToString,
+            moneda__pb2.ACK.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

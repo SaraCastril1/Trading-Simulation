@@ -4,6 +4,7 @@ message message_parameters{
     string moneda = 1;
     string periodo = 2;
 }
+message ping{}
 
 message ACK{
     bool ack = 1;
@@ -11,6 +12,7 @@ message ACK{
 
 
 service Parameters{
+    rpc conexion_up(ping) returns (ACK);
 	rpc send_parameters(message_parameters) returns (ACK);
 }
 
