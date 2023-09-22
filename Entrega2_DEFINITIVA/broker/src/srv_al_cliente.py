@@ -44,7 +44,7 @@ def server(PORT):
     # Cambia la dirección y el puerto según tus necesidades.
     server.add_insecure_port(PORT)
     server.start()
-    print("Broker en ejecución en el puerto 50051...")
+    print("Broker en ejecución en el puerto {}...".format(PORT))
     server.wait_for_termination()
 
 # if __name__ == '__main__':
