@@ -90,7 +90,7 @@ def main():
 
         # Now you can use the PORT variable here or pass it to another function.
         print("La petición se enviará a {}...".format(HOST))
-        server(HOST, int(sys.argv[1]))
+        server(HOST, sys.argv[1])
 
     else:
         print("Se necesita especificar el mercado a ejecutar.")

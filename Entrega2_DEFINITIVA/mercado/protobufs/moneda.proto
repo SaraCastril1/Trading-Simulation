@@ -5,7 +5,7 @@ message message_parameters{
     string periodo = 2;
 }
 message ping{
-    int32 mercado = 1;
+    string mercado = 1;
 }
 
 message ACK{
