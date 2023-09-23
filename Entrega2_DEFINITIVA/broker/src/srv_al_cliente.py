@@ -38,7 +38,7 @@ class Parameters(moneda_pb2_grpc.ParametersServicer):
         return response
 
 
-def server(PORT):
+def server_client(PORT):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=20))
     moneda_pb2_grpc.add_ParametersServicer_to_server(Parameters(), server)
 
