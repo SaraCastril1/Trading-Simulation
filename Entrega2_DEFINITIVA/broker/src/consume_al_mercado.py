@@ -64,18 +64,6 @@ def server(PORT_1):#, PORT_2, PORT_3, PORT_4, PORT_5, PORT_6, PORT_7, PORT_8, PO
 
 
 
-def main():
-    load_dotenv()
-    PORT_1 = os.environ.get("PORT-1")
-    PORT_2 = os.environ.get("PORT-2")
-    PORT_3 = os.environ.get("PORT-3")
-    PORT_4 = os.environ.get("PORT-4")
-    PORT_5 = os.environ.get("PORT-5")
-    PORT_6 = os.environ.get("PORT-6")
-    PORT_7 = os.environ.get("PORT-7")
-    PORT_8 = os.environ.get("PORT-8")
-    PORT_9 = os.environ.get("PORT-9")
 
-    server(PORT_1, PORT_2, PORT_3, PORT_4, PORT_5, PORT_6, PORT_7, PORT_8, PORT_9)
-    #AÑADIR TODOS LOS PUERTOS
+    
 
