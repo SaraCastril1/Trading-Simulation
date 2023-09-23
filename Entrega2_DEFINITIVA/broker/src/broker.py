@@ -3,12 +3,9 @@ import srv_al_cliente
 from dotenv import load_dotenv
 import os
 
-
-if __name__ == '__main__':
+def main():
     load_dotenv()
     PORT = os.environ.get("PORT")
-    #HOST_BROKER = os.environ.get("HOST_BROKER")
-    #HOST_MERCADO = os.environ.get("HOST_MERCADO-2")
     # Recibe la comunicación del cliente
     srv_al_cliente.server(PORT)
 
@@ -17,3 +14,5 @@ if __name__ == '__main__':
     # periodo = srv_al_cliente.periodo
     # print('YA VOY A LLAMAR AL MERCADO CO LOS SIGUIENTES PARAMETROS', moneda, periodo)
     # consume_al_mercado.server(HOST_MERCADO, moneda, periodo)
+if __name__ == '__main__':
+    main()

@@ -37,6 +37,28 @@ def server(PORT):
 
 
 
+# def send_parameters(stub, moneda, periodo):
+#     request = moneda_pb2.message_parameters(moneda=moneda, periodo=periodo)
+#     response = stub.send_parameters(request)
+#     print("ACK:", response.ack)
+
+# def conexion_up(stub):
+#     request = moneda_pb2.ping()
+#     response = stub.send_parameters(request)
+#     print("ACK:", response.ack)
+
+
+# def server(HOST, moneda, periodo):
+#     # LEVANTA LA CONEXIÓN CON EL BROKER ---------------------------------------------------------
+#     with grpc.insecure_channel(HOST) as channel:
+#         stub = moneda_pb2_grpc.ParametersStub(channel)
+
+#         #conexion_up(stub)
+#         send_parameters(stub,moneda, periodo)
+
+
+
+
 
 def main():
     load_dotenv()
@@ -45,29 +67,30 @@ def main():
         #print(sys.argv[1])
         
         if sys.argv[1] == '1':
-            PORT = os.environ.get("PORT-1")
+            HOST = os.environ.get("HOST-1")
         elif sys.argv[1] == '2':
-            PORT = os.environ.get("PORT-2")
+            HOST = os.environ.get("HOST-2")
         elif sys.argv[1] == '3':
-            PORT = os.environ.get("PORT-3")
+            HOST = os.environ.get("HOST-3")
         elif sys.argv[1] == '4':
-            PORT = os.environ.get("PORT-4")
+            HOST = os.environ.get("HOST-4")
         elif sys.argv[1] == '5':
-            PORT = os.environ.get("PORT-5")
+            HOST = os.environ.get("HOST-5")
         elif sys.argv[1] == '6':
-            PORT = os.environ.get("PORT-6")
+            HOST = os.environ.get("HOST-6")
         elif sys.argv[1] == '7':
-            PORT = os.environ.get("PORT-7")
+            HOST = os.environ.get("HOST-7")
         elif sys.argv[1] == '8':
-            PORT = os.environ.get("PORT-8")
+            HOST = os.environ.get("HOST-8")
         elif sys.argv[1] == '9':
-            PORT = os.environ.get("PORT-9")
+            HOST = os.environ.get("HOST-9")
         else:
             print("El mercado especificado no está en el rango válido (1-9).")
             sys.exit(1)
 
         # Now you can use the PORT variable here or pass it to another function.
-        server(PORT)
+        print("La petición se enviará a {}...".format(HOST))
+        #server(HOST)
 
     else:
         print("Se necesita especificar el mercado a ejecutar.")
