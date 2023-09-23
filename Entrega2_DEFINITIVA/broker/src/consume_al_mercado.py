@@ -36,16 +36,21 @@ class Parameters(moneda_pb2_grpc.ParametersServicer):
         response = moneda_pb2.ACK(ack=True)  # Por ejemplo, aquí puedes devolver una respuesta de confirmación
         return response
     
-    def conexion_up(self, request, context):
 
+    def conexion_up(self, request, context):
         mercado = request.mercado
+
         # Realiza el procesamiento necesario con moneda y período aquí.
         # Puedes agregar tu lógica de procesamiento personalizada.
-        print("Mercado recivido: ", mercado)
+        print("Mercado recibido: ", mercado)
 
-        # Envía una respuesta de confirmación (ACK).
-        response = moneda_pb2.ACK(ack=True)
+        # Puedes devolver los datos que deseas imprimir en lugar de un ACK
+        datos_para_imprimir = "Los datos que deseas imprimir: {}".format(mercado)
+        
+        # Devuelve los datos que deseas imprimir como parte de la respuesta
+        response = moneda_pb2.ACK(ack=True, mensaje=datos_para_imprimir)
         return response
+
 
 
 def server(PORT_1, PORT_2, PORT_3,PORT_4, PORT_5, PORT_6, PORT_7, PORT_8, PORT_9):#, PORT_2, PORT_3, PORT_4, PORT_5, PORT_6, PORT_7, PORT_8, PORT_9):
