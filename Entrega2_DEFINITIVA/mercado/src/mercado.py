@@ -89,6 +89,7 @@ def main():
             sys.exit(1)
 
         # Now you can use the PORT variable here or pass it to another function.
+        print(HOST)
         print("La petición se enviará a {}...".format(HOST))
         #server(HOST)
 
