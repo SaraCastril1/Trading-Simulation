@@ -31,7 +31,7 @@ class Parameters(moneda_pb2_grpc.ParametersServicer):
 
         # # Levanta la comunicación con el mercado
         print('YA VOY A LLAMAR AL MERCADO CO LOS SIGUIENTES PARAMETROS', moneda, periodo)
-        consume_al_mercado.server(os.environ.get("HOST_MERCADO-2"), moneda, periodo)
+        consume_al_mercado.server(os.environ.get("HOST_MERCADO-1"), moneda, periodo)
 
         # Envía una respuesta de confirmación (ACK).
         response = moneda_pb2.ACK(ack=True)
