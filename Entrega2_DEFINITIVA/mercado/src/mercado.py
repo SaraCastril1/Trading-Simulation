@@ -40,7 +40,7 @@ def server(PORT):
 
 def main():
     load_dotenv()
-
+    print(len(sys.argv))
     if len(sys.argv) > 3:
         print(sys.argv[2])
         
