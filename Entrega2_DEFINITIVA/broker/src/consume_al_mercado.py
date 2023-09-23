@@ -1,7 +1,6 @@
 from concurrent import futures
 from dotenv import load_dotenv
 import os
-import logging
 
 import grpc
 #from dotenv import load_dotenv
@@ -50,30 +49,22 @@ def server(PORT_1, PORT_2, PORT_3, PORT_4, PORT_5, PORT_6, PORT_7, PORT_8, PORT_
 
     # Cambia la dirección y el puerto según tus necesidades.
     server.add_insecure_port(PORT_1)
-    # server.add_insecure_port(PORT_2)
-    # server.add_insecure_port(PORT_3)
-    # server.add_insecure_port(PORT_4)
-    # server.add_insecure_port(PORT_5)
-    # server.add_insecure_port(PORT_6)
-    # server.add_insecure_port(PORT_7)
-    # server.add_insecure_port(PORT_8)
-    # server.add_insecure_port(PORT_9)
+    server.add_insecure_port(PORT_2)
+    server.add_insecure_port(PORT_3)
+    server.add_insecure_port(PORT_4)
+    server.add_insecure_port(PORT_5)
+    server.add_insecure_port(PORT_6)
+    server.add_insecure_port(PORT_7)
+    server.add_insecure_port(PORT_8)
+    server.add_insecure_port(PORT_9)
 
     server.start()
     print("Broker en ejecución en el puerto {}...".format(PORT_1))
-    # Configure logging
-    logging.basicConfig(level=logging.INFO)
-
-    # Replace print statements with log messages
-    logging.info("Broker en ejecución en el puerto {}...".format(PORT_1))
     server.wait_for_termination()
 
 
 
-if __name__ == '__main__':
-
-
-
+def main():
     load_dotenv()
     PORT_1 = os.environ.get("PORT-1")
     PORT_2 = os.environ.get("PORT-2")
@@ -87,3 +78,6 @@ if __name__ == '__main__':
 
     server(PORT_1, PORT_2, PORT_3, PORT_4, PORT_5, PORT_6, PORT_7, PORT_8, PORT_9)
     #AÑADIR TODOS LOS PUERTOS
+
+if __name__ == '__main__':
+    main()
