@@ -40,27 +40,27 @@ def server(PORT):
 
 def main():
     load_dotenv()
-    print(len(sys.argv))
-    if len(sys.argv) > 3:
-        print(sys.argv[2])
+    #print(len(sys.argv))
+    if len(sys.argv) > 1:
+        print(sys.argv[1])
         
-        if sys.argv[2] == '1':
+        if sys.argv[1] == '1':
             PORT = os.environ.get("PORT-1")
-        elif sys.argv[2] == '2':
+        elif sys.argv[1] == '2':
             PORT = os.environ.get("PORT-2")
-        elif sys.argv[2] == '3':
+        elif sys.argv[1] == '3':
             PORT = os.environ.get("PORT-3")
-        elif sys.argv[2] == '4':
+        elif sys.argv[1] == '4':
             PORT = os.environ.get("PORT-4")
-        elif sys.argv[2] == '5':
+        elif sys.argv[1] == '5':
             PORT = os.environ.get("PORT-5")
-        elif sys.argv[2] == '6':
+        elif sys.argv[1] == '6':
             PORT = os.environ.get("PORT-6")
-        elif sys.argv[2] == '7':
+        elif sys.argv[1] == '7':
             PORT = os.environ.get("PORT-7")
-        elif sys.argv[2] == '8':
+        elif sys.argv[1] == '8':
             PORT = os.environ.get("PORT-8")
-        elif sys.argv[2] == '9':
+        elif sys.argv[1] == '9':
             PORT = os.environ.get("PORT-9")
         else:
             print("El mercado especificado no está en el rango válido (1-9).")
