@@ -43,6 +43,7 @@ def main():
 
     if len(sys.argv) == 3:
         market_number = sys.argv[2]  # Store the market number from command-line argument.
+        print(market_number)
         
         if market_number == '1':
             PORT = os.environ.get("PORT-1")
