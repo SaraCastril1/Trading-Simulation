@@ -36,42 +36,42 @@ def server(PORT):
     server.wait_for_termination()
 
 
+
+
 def main():
     load_dotenv()
 
     if len(sys.argv) == 3:
-
-        if sys.argv[2] == '1':
-            PORT = os.environ.get("PORT-1") 
-        elif sys.argv[2] == '2':
-            PORT = os.environ.get("PORT-2") 
-        elif sys.argv[2] == '3':
-            PORT = os.environ.get("PORT-3") 
-        elif sys.argv[2] == '4':
-            PORT = os.environ.get("PORT-4") 
-        elif sys.argv[2] == '5':
-            PORT = os.environ.get("PORT-5") 
-        elif sys.argv[2] == '6':
-            PORT = os.environ.get("PORT-6") 
-        elif sys.argv[2] == '7':
-            PORT = os.environ.get("PORT-7") 
-        elif sys.argv[2] == '8':
-            PORT = os.environ.get("PORT-8") 
-        elif sys.argv[2] == '9':
-            PORT = os.environ.get("PORT-9") 
+        market_number = sys.argv[2]  # Store the market number from command-line argument.
         
+        if market_number == '1':
+            PORT = os.environ.get("PORT-1")
+        elif market_number == '2':
+            PORT = os.environ.get("PORT-2")
+        elif market_number == '3':
+            PORT = os.environ.get("PORT-3")
+        elif market_number == '4':
+            PORT = os.environ.get("PORT-4")
+        elif market_number == '5':
+            PORT = os.environ.get("PORT-5")
+        elif market_number == '6':
+            PORT = os.environ.get("PORT-6")
+        elif market_number == '7':
+            PORT = os.environ.get("PORT-7")
+        elif market_number == '8':
+            PORT = os.environ.get("PORT-8")
+        elif market_number == '9':
+            PORT = os.environ.get("PORT-9")
         else:
-            print("Solo hay disponibles 9 mercados.")
+            print("El mercado especificado no está en el rango válido (1-9).")
             sys.exit(1)
 
+        # Now you can use the PORT variable here or pass it to another function.
+        server(PORT)
+
     else:
-        print("Se necesitan que especifique el mercado a ejecutar.")
+        print("Se necesita especificar el mercado a ejecutar.")
         sys.exit(1)
-    
-    server(PORT)
-
-
-
 
 if __name__ == '__main__':
     main()
