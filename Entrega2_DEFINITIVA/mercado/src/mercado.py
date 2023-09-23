@@ -39,7 +39,7 @@ def server(PORT):
 def main():
     load_dotenv()
 
-    if len(sys.argv) >= 3:
+    if len(sys.argv) == 3:
 
         if sys.argv[2] == '1':
             PORT = os.environ.get("PORT-1") 
@@ -63,7 +63,6 @@ def main():
         else:
             print("Solo hay disponibles 9 mercados.")
             sys.exit(1)
-
 
     else:
         print("Se necesitan que especifique el mercado a ejecutar.")
