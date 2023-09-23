@@ -1,9 +1,10 @@
 from concurrent import futures
 
 import grpc
+import sys
+import os
 import moneda_pb2
 import moneda_pb2_grpc
-import os
 from dotenv import load_dotenv
 
 
@@ -34,7 +35,44 @@ def server(PORT):
     print("Mercado en ejecución en el puerto {}...".format(PORT))
     server.wait_for_termination()
 
-if __name__ == '__main__':
+
+def main():
     load_dotenv()
-    PORT = os.environ.get("PORT") 
+
+    if len(sys.argv) > 2:
+
+        if sys.argv[1] == 1:
+            PORT = os.environ.get("PORT-1") 
+        elif sys.argv[1] == 2:
+            PORT = os.environ.get("PORT-2") 
+        elif sys.argv[1] == 3:
+            PORT = os.environ.get("PORT-3") 
+        elif sys.argv[1] == 4:
+            PORT = os.environ.get("PORT-4") 
+        elif sys.argv[1] == 5:
+            PORT = os.environ.get("PORT-5") 
+        elif sys.argv[1] == 6:
+            PORT = os.environ.get("PORT-6") 
+        elif sys.argv[1] == 7:
+            PORT = os.environ.get("PORT-7") 
+        elif sys.argv[1] == 8:
+            PORT = os.environ.get("PORT-8") 
+        elif sys.argv[1] == 9:
+            PORT = os.environ.get("PORT-9") 
+        
+        else:
+            print("Solo hay disponibles 9 mercados.")
+            return(1)
+
+
+    else:
+        print("Se necesitan que especifique el mercado a ejecutar.")
+        return(1)
+    
     server(PORT)
+
+
+
+
+if __name__ == '__main__':
+    main()
