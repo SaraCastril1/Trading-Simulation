@@ -41,27 +41,26 @@ def server(PORT):
 def main():
     load_dotenv()
 
-    if len(sys.argv) == 3:
-        market_number = sys.argv[2]  # Store the market number from command-line argument.
-        print(market_number)
+    if len(sys.argv) > 3:
+        print(sys.argv[2])
         
-        if market_number == '1':
+        if sys.argv[2] == '1':
             PORT = os.environ.get("PORT-1")
-        elif market_number == '2':
+        elif sys.argv[2] == '2':
             PORT = os.environ.get("PORT-2")
-        elif market_number == '3':
+        elif sys.argv[2] == '3':
             PORT = os.environ.get("PORT-3")
-        elif market_number == '4':
+        elif sys.argv[2] == '4':
             PORT = os.environ.get("PORT-4")
-        elif market_number == '5':
+        elif sys.argv[2] == '5':
             PORT = os.environ.get("PORT-5")
-        elif market_number == '6':
+        elif sys.argv[2] == '6':
             PORT = os.environ.get("PORT-6")
-        elif market_number == '7':
+        elif sys.argv[2] == '7':
             PORT = os.environ.get("PORT-7")
-        elif market_number == '8':
+        elif sys.argv[2] == '8':
             PORT = os.environ.get("PORT-8")
-        elif market_number == '9':
+        elif sys.argv[2] == '9':
             PORT = os.environ.get("PORT-9")
         else:
             print("El mercado especificado no está en el rango válido (1-9).")
