@@ -21,8 +21,8 @@ def server(HOST, moneda, periodo):
     with grpc.insecure_channel(HOST) as channel:
         stub = moneda_pb2_grpc.ParametersStub(channel)
 
-        conexion_up(stub)
-        #send_parameters(stub,moneda, periodo)
+        #conexion_up(stub)
+        send_parameters(stub,moneda, periodo)
     
 
 
