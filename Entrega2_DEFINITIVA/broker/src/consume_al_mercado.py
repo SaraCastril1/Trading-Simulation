@@ -31,6 +31,11 @@ import moneda_pb2_grpc
 
 class Parameters(moneda_pb2_grpc.ParametersServicer):
 
+    def send_parameters(self, request, context):
+        # Implementa la lógica del servidor aquí
+        response = moneda_pb2.ACK(ack=True)  # Por ejemplo, aquí puedes devolver una respuesta de confirmación
+        return response
+    
     def conexion_up(self, request, context):
 
         mercado = request.mercado
