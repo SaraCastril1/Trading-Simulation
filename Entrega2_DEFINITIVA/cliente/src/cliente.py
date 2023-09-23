@@ -7,10 +7,20 @@ from dotenv import load_dotenv
 import moneda_pb2
 import moneda_pb2_grpc
 
+# def send_parameters(stub, moneda, periodo):
+#     request = moneda_pb2.message_parameters(moneda=moneda, periodo=periodo)
+#     response = stub.send_parameters(request)
+#     print("ACK:", response.ack)
+
 def send_parameters(stub, moneda, periodo):
+    if moneda is None or periodo is None:
+        print("Moneda y período deben especificarse...")
+        return(1)
+    
     request = moneda_pb2.message_parameters(moneda=moneda, periodo=periodo)
     response = stub.send_parameters(request)
     print("ACK:", response.ack)
+
 
 
 
