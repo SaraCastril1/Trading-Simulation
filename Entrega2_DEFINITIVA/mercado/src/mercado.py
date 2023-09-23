@@ -8,53 +8,53 @@ import moneda_pb2_grpc
 from dotenv import load_dotenv
 
 
-# CONEXIÓN CON EL BROKER ------------------------------------------------------------------------
+# # CONEXIÓN CON EL BROKER ------------------------------------------------------------------------
 
-class Parameters(moneda_pb2_grpc.ParametersServicer):
+# class Parameters(moneda_pb2_grpc.ParametersServicer):
 
-    def send_parameters(self, request, context):
-        moneda = request.moneda
-        periodo = request.periodo
+#     def send_parameters(self, request, context):
+#         moneda = request.moneda
+#         periodo = request.periodo
 
-        # Realiza el procesamiento necesario con moneda y período aquí.
-        # Puedes agregar tu lógica de procesamiento personalizada.
-        print("Moneda recivida: ", moneda)
-        print("Periodo recivida: ", periodo)
+#         # Realiza el procesamiento necesario con moneda y período aquí.
+#         # Puedes agregar tu lógica de procesamiento personalizada.
+#         print("Moneda recivida: ", moneda)
+#         print("Periodo recivida: ", periodo)
 
-        # Envía una respuesta de confirmación (ACK).
-        response = moneda_pb2.ACK(ack=True)
-        return response
+#         # Envía una respuesta de confirmación (ACK).
+#         response = moneda_pb2.ACK(ack=True)
+#         return response
 
-def server(PORT):
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=20))
-    moneda_pb2_grpc.add_ParametersServicer_to_server(Parameters(), server)
+# def server(PORT):
+#     server = grpc.server(futures.ThreadPoolExecutor(max_workers=20))
+#     moneda_pb2_grpc.add_ParametersServicer_to_server(Parameters(), server)
 
-    # Cambia la dirección y el puerto según tus necesidades.
-    server.add_insecure_port(PORT)
-    server.start()
-    print("Mercado en ejecución en el puerto {}...".format(PORT))
-    server.wait_for_termination()
-
-
-
-# def send_parameters(stub, moneda, periodo):
-#     request = moneda_pb2.message_parameters(moneda=moneda, periodo=periodo)
-#     response = stub.send_parameters(request)
-#     print("ACK:", response.ack)
-
-# def conexion_up(stub):
-#     request = moneda_pb2.ping()
-#     response = stub.send_parameters(request)
-#     print("ACK:", response.ack)
+#     # Cambia la dirección y el puerto según tus necesidades.
+#     server.add_insecure_port(PORT)
+#     server.start()
+#     print("Mercado en ejecución en el puerto {}...".format(PORT))
+#     server.wait_for_termination()
 
 
-# def server(HOST, moneda, periodo):
-#     # LEVANTA LA CONEXIÓN CON EL BROKER ---------------------------------------------------------
-#     with grpc.insecure_channel(HOST) as channel:
-#         stub = moneda_pb2_grpc.ParametersStub(channel)
+# EN ESTA PARTE SE COMPORTA COMO PRODUCTOR PARA MANDAR EL PING AL BROKER
+def send_parameters(stub, moneda, periodo):
+    request = moneda_pb2.message_parameters(moneda=moneda, periodo=periodo)
+    response = stub.send_parameters(request)
+    print("ACK:", response.ack)
 
-#         #conexion_up(stub)
-#         send_parameters(stub,moneda, periodo)
+def conexion_up(stub, mercado):
+    request = moneda_pb2.ping(mercado=mercado)
+    response = stub.send_parameters(request)
+    print("ACK:", response.ack)
+
+
+def server(HOST, mercado):
+    # LEVANTA LA CONEXIÓN CON EL BROKER ---------------------------------------------------------
+    with grpc.insecure_channel(HOST) as channel:
+        stub = moneda_pb2_grpc.ParametersStub(channel)
+
+        conexion_up(stub, mercado)
+        #send_parameters(stub,moneda, periodo)
 
 
 
@@ -89,9 +89,8 @@ def main():
             sys.exit(1)
 
         # Now you can use the PORT variable here or pass it to another function.
-        print(HOST)
         print("La petición se enviará a {}...".format(HOST))
-        #server(HOST)
+        server(HOST, sys.argv[1])
 
     else:
         print("Se necesita especificar el mercado a ejecutar.")
