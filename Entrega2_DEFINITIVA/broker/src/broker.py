@@ -8,7 +8,7 @@ if __name__ == '__main__':
     load_dotenv()
     PORT = os.environ.get("PORT")
     HOST_BROKER = os.environ.get("HOST_BROKER")
-    HOST_MERCADO = os.environ.get("HOST_MERCADO")
+    HOST_MERCADO = os.environ.get("HOST_MERCADO-2")
     # Recibe la comunicación del cliente
     srv_al_cliente.server(PORT)
 
