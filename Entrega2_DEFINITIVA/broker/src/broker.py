@@ -1,5 +1,5 @@
 import srv_al_cliente
-import consume_al_mercado
+#import consume_al_mercado
 from dotenv import load_dotenv
 import os
 
