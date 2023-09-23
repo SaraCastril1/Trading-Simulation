@@ -1,5 +1,5 @@
 import srv_al_cliente
-#import consume_al_mercado
+import consume_al_mercado
 from dotenv import load_dotenv
 import os
 
@@ -7,7 +7,8 @@ def main():
     load_dotenv()
     PORT = os.environ.get("PORT")
     # Recibe la comunicación del cliente
-    srv_al_cliente.server(PORT)
+    #srv_al_cliente.server(PORT)
+    consume_al_mercado.server("PORT")
 
     # # Levanta la comunicación con el mercado
     # moneda = srv_al_cliente.moneda

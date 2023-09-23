@@ -1,4 +1,4 @@
-from concurrent import futures
+#from concurrent import futures
 from dotenv import load_dotenv
 import os
 
@@ -43,20 +43,20 @@ class Parameters(moneda_pb2_grpc.ParametersServicer):
         return response
 
 
-def server(PORT_1, PORT_2, PORT_3, PORT_4, PORT_5, PORT_6, PORT_7, PORT_8, PORT_9):
+def server(PORT_1):#, PORT_2, PORT_3, PORT_4, PORT_5, PORT_6, PORT_7, PORT_8, PORT_9):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=20))
     moneda_pb2_grpc.add_ParametersServicer_to_server(Parameters(), server)
 
     # Cambia la dirección y el puerto según tus necesidades.
     server.add_insecure_port(PORT_1)
-    server.add_insecure_port(PORT_2)
-    server.add_insecure_port(PORT_3)
-    server.add_insecure_port(PORT_4)
-    server.add_insecure_port(PORT_5)
-    server.add_insecure_port(PORT_6)
-    server.add_insecure_port(PORT_7)
-    server.add_insecure_port(PORT_8)
-    server.add_insecure_port(PORT_9)
+    # server.add_insecure_port(PORT_2)
+    # server.add_insecure_port(PORT_3)
+    # server.add_insecure_port(PORT_4)
+    # server.add_insecure_port(PORT_5)
+    # server.add_insecure_port(PORT_6)
+    # server.add_insecure_port(PORT_7)
+    # server.add_insecure_port(PORT_8)
+    # server.add_insecure_port(PORT_9)
 
     server.start()
     print("Broker en ejecución en el puerto {}...".format(PORT_1))
@@ -79,5 +79,3 @@ def main():
     server(PORT_1, PORT_2, PORT_3, PORT_4, PORT_5, PORT_6, PORT_7, PORT_8, PORT_9)
     #AÑADIR TODOS LOS PUERTOS
 
-if __name__ == '__main__':
-    main()
