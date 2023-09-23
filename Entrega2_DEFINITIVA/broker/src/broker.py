@@ -16,7 +16,7 @@ def main():
     PORT_9 = os.environ.get("PORT-9")
     # Recibe la comunicación del cliente
     #srv_al_cliente.server(PORT)
-    consume_al_mercado.server(PORT_1, PORT_9)
+    consume_al_mercado.server(PORT_1, PORT_2, PORT_3,PORT_4, PORT_5, PORT_6, PORT_7, PORT_8, PORT_9)
 
     # # Levanta la comunicación con el mercado
     # moneda = srv_al_cliente.moneda
