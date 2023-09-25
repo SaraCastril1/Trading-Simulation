@@ -54,7 +54,7 @@ class Parameters(moneda_pb2_grpc.ParametersServicer):
 
 
 def server(PORT_1, PORT_2, PORT_3,PORT_4, PORT_5, PORT_6, PORT_7, PORT_8, PORT_9):#, PORT_2, PORT_3, PORT_4, PORT_5, PORT_6, PORT_7, PORT_8, PORT_9):
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=20))
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     moneda_pb2_grpc.add_ParametersServicer_to_server(Parameters(), server)
 
     # Cambia la dirección y el puerto según tus necesidades.
