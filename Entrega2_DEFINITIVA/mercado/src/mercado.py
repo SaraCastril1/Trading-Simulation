@@ -42,10 +42,15 @@ def send_parameters(stub, moneda, periodo):
     response = stub.send_parameters(request)
     print("ACK:", response.ack)
 
-def conexion_up(stub, mercado):
+def conexion_up(stub, HOST,mercado):
     request = moneda_pb2.ping(mercado=mercado)
     response = stub.send_parameters(request)
     print("ACK:", response.ack)
+
+    with grpc.insecure_channel(HOST) as channel:
+        stub = moneda_pb2_grpc.ParametersStub(channel)
+
+    
 
 
 def server(HOST, mercado):
@@ -53,7 +58,7 @@ def server(HOST, mercado):
     with grpc.insecure_channel(HOST) as channel:
         stub = moneda_pb2_grpc.ParametersStub(channel)
 
-        conexion_up(stub, mercado)
+        conexion_up(stub, HOST, mercado) 
         #send_parameters(stub,moneda, periodo)
 
 
@@ -91,6 +96,7 @@ def main():
         # Now you can use the PORT variable here or pass it to another function.
         print("La petición se enviará a {}...".format(HOST))
         server(HOST, sys.argv[1])
+        
 
     else:
         print("Se necesita especificar el mercado a ejecutar.")
