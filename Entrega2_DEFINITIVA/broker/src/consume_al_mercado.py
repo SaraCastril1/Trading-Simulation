@@ -71,6 +71,7 @@ def server(PORT_1, PORT_2, PORT_3,PORT_4, PORT_5, PORT_6, PORT_7, PORT_8, PORT_9
     server.start()
     print("Escuchando en:\n {}\n {}\n {}\n {}\n {}\n {}\n {}\n {}\n {}...".format(PORT_1, PORT_2, PORT_3,PORT_4, PORT_5, PORT_6, PORT_7, PORT_8, PORT_9))
     server.wait_for_termination()
+    print("Esperando...")
 
 
 
