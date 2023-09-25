@@ -47,8 +47,7 @@ def conexion_up(stub, HOST,mercado):
     response = stub.send_parameters(request)
     print("ACK:", response.ack)
 
-    with grpc.insecure_channel(HOST) as channel:
-        stub = moneda_pb2_grpc.ParametersStub(channel)
+
 
     
 
