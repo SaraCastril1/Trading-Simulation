@@ -9,6 +9,8 @@ import moneda_pb2_grpc
 
 def send_parameters(stub, moneda, periodo):
     request = moneda_pb2.message_parameters(moneda=moneda, periodo=periodo)
+    print("Moneda recivida: ", moneda)
+    print("Periodo recivida: ", periodo)
     response = stub.send_parameters(request)
     print("ACK:", response.ack)
 
