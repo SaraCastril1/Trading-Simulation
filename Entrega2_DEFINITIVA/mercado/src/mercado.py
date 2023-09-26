@@ -66,7 +66,7 @@ def server(PORT):
 
 def main():
     load_dotenv()
-    PORT = os.environ.get("HOST-1")
+    PORT = os.environ.get("PORT-1")
     server(PORT)
     #print(len(sys.argv))
     # if len(sys.argv) > 1:
