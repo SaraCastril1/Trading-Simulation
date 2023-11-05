@@ -61,6 +61,7 @@ def receive_candle(host, port, currency):
 
     while True:
         data = client_socket.recv(buffer).decode('utf-8')
+        print(data)
         # print(data)
         if not data:
             break

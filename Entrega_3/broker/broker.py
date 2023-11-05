@@ -5,6 +5,17 @@ import threading
 import sys
 import os
 
+# DATA IN MEMORY
+m1 = []
+m2 = []
+m3 = []
+m4 = []
+m5 = []
+m6 = []
+m7 = []
+m8 = []
+m9 = []
+
 
     # Mercado 1 = BRENTCMDUSD
     # Mercado 2 = BTCUSD
@@ -27,6 +38,13 @@ data_queue8 = Queue()
 data_queue9 = Queue()
 
 client_connected = threading.Event()
+
+def debug_print(market):
+    print("{}****************************************************************".format(market))
+    with open("data_in_memory.txt", "a") as file:
+        for data in market:
+            file.write(data + "\n")
+
 
 
 def main():
@@ -165,40 +183,76 @@ def main():
 
 
     # Activar hilo del cliente BRENTCMDUSD
-    producer_client_thread = threading.Thread(target=connect_to_client, args=(client_host, client_port1, data_queue1, "m1", client_connected ))
-    producer_client_thread.start()
+    producer_client_thread1 = threading.Thread(target=connect_to_client, args=(client_host, client_port1, data_queue1, "m1", m1, client_connected ))
+    producer_client_thread1.start()
 
     # Activar hilo del cliente BTCUSD
-    producer_client_thread = threading.Thread(target=connect_to_client, args=(client_host, client_port2, data_queue2, "m2", client_connected ))
-    producer_client_thread.start()
+    producer_client_thread2 = threading.Thread(target=connect_to_client, args=(client_host, client_port2, data_queue2, "m2", m2, client_connected ))
+    producer_client_thread2.start()
 
     # Activar hilo del cliente EURUSD
-    producer_client_thread = threading.Thread(target=connect_to_client, args=(client_host, client_port3, data_queue3, "m3", client_connected ))
-    producer_client_thread.start()
+    producer_client_thread3 = threading.Thread(target=connect_to_client, args=(client_host, client_port3, data_queue3, "m3", m3, client_connected ))
+    producer_client_thread3.start()
 
     # Activar hilo del cliente GBPUSD
-    producer_client_thread = threading.Thread(target=connect_to_client, args=(client_host, client_port4, data_queue4, "m4", client_connected))
-    producer_client_thread.start()
+    producer_client_thread4 = threading.Thread(target=connect_to_client, args=(client_host, client_port4, data_queue4, "m4", m4, client_connected))
+    producer_client_thread4.start()
 
     # Activar hilo del cliente USA30IDXUSD
-    producer_client_thread = threading.Thread(target=connect_to_client, args=(client_host, client_port5, data_queue5, "m5", client_connected))
-    producer_client_thread.start()
+    producer_client_thread5 = threading.Thread(target=connect_to_client, args=(client_host, client_port5, data_queue5, "m5", m5, client_connected))
+    producer_client_thread5.start()
 
     # Activar hilo del cliente USA500IDXUSD
-    producer_client_thread = threading.Thread(target=connect_to_client, args=(client_host, client_port6, data_queue6, "m6", client_connected))
-    producer_client_thread.start()
+    producer_client_thread6 = threading.Thread(target=connect_to_client, args=(client_host, client_port6, data_queue6, "m6", m6, client_connected))
+    producer_client_thread6.start()
 
     # Activar hilo del cliente USATECHIDXUSD
-    producer_client_thread = threading.Thread(target=connect_to_client, args=(client_host, client_port7, data_queue7, "m7", client_connected))
-    producer_client_thread.start()
+    producer_client_thread7 = threading.Thread(target=connect_to_client, args=(client_host, client_port7, data_queue7, "m7", m7, client_connected))
+    producer_client_thread7.start()
 
     # Activar hilo del cliente XAGUSD
-    producer_client_thread = threading.Thread(target=connect_to_client, args=(client_host, client_port8, data_queue8, "m8", client_connected))
-    producer_client_thread.start()
+    producer_client_thread8 = threading.Thread(target=connect_to_client, args=(client_host, client_port8, data_queue8, "m8", m8, client_connected))
+    producer_client_thread8.start()
 
     # Activar hilo del cliente XAUUSD
-    producer_client_thread = threading.Thread(target=connect_to_client, args=(client_host, client_port9, data_queue9, "m9", client_connected))
-    producer_client_thread.start()
+    producer_client_thread9 = threading.Thread(target=connect_to_client, args=(client_host, client_port9, data_queue9, "m9", m9, client_connected))
+    producer_client_thread9.start()
+
+
+    # FINALMENTE ------------------------------------------------------------------------
+    consume_market_thread1.join()
+    consume_market_thread2.join()
+    consume_market_thread3.join()
+    consume_market_thread4.join()
+    consume_market_thread5.join()
+    consume_market_thread6.join()
+    consume_market_thread7.join()
+    consume_market_thread8.join()
+    consume_market_thread9.join()
+    producer_client_thread1.join()
+    producer_client_thread2.join()
+    producer_client_thread3.join()
+    producer_client_thread4.join()
+    producer_client_thread5.join()
+    producer_client_thread6.join()
+    producer_client_thread7.join()
+    producer_client_thread8.join()
+    producer_client_thread9.join()
+
+
+    # print("m1****************************************************************")
+    # with open("data_in_memory.txt", "a") as file:
+    #     for data in m1:
+    #         file.write(data + "\n")
+
+    # debug_print(m1)
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":

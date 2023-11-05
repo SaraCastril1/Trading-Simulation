@@ -1,14 +1,21 @@
 import time
 import socket
+import linecache
 import threading
 
 
 clients = 0
 clients_lock = threading.Lock()
 
-def handle_client(client_socket, data_queue, index_market):
+current_candle = ""
+current_threads = 1 
+
+
+def handle_client(client_socket, data_queue, index_market, data_in_memory):
     
-    global clients, clients_lock
+    global clients, clients_lock, current_candle, current_threads
+    
+
     with clients_lock:
         clients += 1
     print(f"CLIENT NUMBER = {clients}")
@@ -16,40 +23,79 @@ def handle_client(client_socket, data_queue, index_market):
     if clients > 9:
         print("THIS IS NOT THE FIRST CLIENT")
 
-        with open("monedas.txt", 'r') as f_in:
-            next(f_in) 
-            for row in f_in:
-                try:
-                    index_list = row.split(',')
-                    my_index = index_list[-1].strip()
-                    if my_index == index_market:
-                        # fecha = row[0]
-                        # apertura = row[1]
-                        # alto = row[2]
-                        # bajo = row[3]
-                        # cierre = row[4]
-                        # candle = f"{fecha},{apertura},{alto},{bajo},{cierre}"
-                        # print(candle)
-                        client_socket.send(row.encode('utf-8'))
-                        time.sleep(0.01)
-                    else:
-                        continue 
-                    
-                except Exception as e:
-                    print("Ocurrió un error al enviar datos al cliente:", str(e))
+
+        if clients > 18:
+            print("THIS IS NOT THE FIRST/SECOND CLIENT")
+
+            for data in data_in_memory:
+                # print(index_market, "->", "index = ", data[1], "date = ", data[0])
+                file_index = data[1]
+                candle = linecache.getline("monedas.txt", file_index)
+                if candle:
+                    print(index_market, "->", "index = ", data[1], "date = ", data[0], "\n", candle)
+                    client_socket.send(candle.encode('utf-8'))
+                    time.sleep(0.01)
+
+                    with open("{}.txt".format(index_market), "a") as file:
+                        file.write(str(data) + "\n")
+                else:
+                    break
+
+            print("THERE IS NO MORE DATA IN DATA_IN_MEMORY")
+            current_threads = 2
+            print(current_threads)
+
+            # while True:
+            #     if current_candle == 'DONE':
+            #         break
+            #     try:
+            #         client_socket.send(current_candle.encode('utf-8'))
+            #     except Exception as e:
+            #         print("Ocurrió un error al enviar datos al cliente:", str(e))
+
+
+
+                
+                
+
+            
+
+        else:
+            print("I AM THE SECOND CLIENT")
+            
+            with open("monedas.txt", 'r') as f_in:
+                # next(f_in) 
+                file_conuter = 1
+                for row in f_in:
+                    try:
+                        index_list = row.split(',')
+                        my_index = index_list[-1].strip()
+                        if my_index == index_market:
+                            candle_tup = (index_list[0].strip(), file_conuter)
+                            # print(index_market, "--->", candle_tup)
+                            data_in_memory.append(candle_tup)
+                            client_socket.send(row.encode('utf-8'))
+                            file_conuter+=1
+                            time.sleep(0.01)
+                        else:
+                            file_conuter+=1
+                        
+                    except Exception as e:
+                        print("Ocurrió un error al enviar datos al cliente:", str(e))
 
  
     
 
     else:
+
         print("I AM THE FIRST CLIENT")
 
         while True:
-            data = data_queue.get()
-            if data == 'DONE':
+            current_candle = data_queue.get()
+            if current_candle == 'DONE':
                 break
             try:
-                client_socket.send(data.encode('utf-8'))
+                client_socket.send(current_candle.encode('utf-8'))
             except Exception as e:
                 print("Ocurrió un error al enviar datos al cliente:", str(e))
 
@@ -63,13 +109,14 @@ def handle_client(client_socket, data_queue, index_market):
 
 
 
-def connect_to_client(host, port, data_queue, index_market, client_connected):
+def connect_to_client(host, port, data_queue, index_market, data_in_memory, client_connected):
     
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((host, port))
     server_socket.listen(5)
 
     print(f"Waiting for client connection {host}:{port}")
+
 
     while True:
         client_socket, addr = server_socket.accept()
@@ -78,7 +125,7 @@ def connect_to_client(host, port, data_queue, index_market, client_connected):
         client_connected.set()
         
 
-        client_thread = threading.Thread(target=handle_client, args=(client_socket, data_queue, index_market))
+        client_thread = threading.Thread(target=handle_client, args=(client_socket, data_queue, index_market, data_in_memory))
         client_thread.start()
 
 
