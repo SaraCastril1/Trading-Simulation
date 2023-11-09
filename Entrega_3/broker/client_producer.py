@@ -8,12 +8,13 @@ clients = 0
 clients_lock = threading.Lock()
 
 current_candle = ""
-current_threads = 1 
+current_threads = 0 
+barrier = threading.Barrier(current_threads)
 
 
 def handle_client(client_socket, data_queue, index_market, data_in_memory):
     
-    global clients, clients_lock, current_candle, current_threads
+    global clients, clients_lock, current_candle, current_threads, barrier
     
 
     with clients_lock:
@@ -39,19 +40,29 @@ def handle_client(client_socket, data_queue, index_market, data_in_memory):
                     with open("{}.txt".format(index_market), "a") as file:
                         file.write(str(data) + "\n")
                 else:
-                    break
+                    print("THERE IS NO MORE DATA IN DATA_IN_MEMORY")
+                    time.sleep(1)
+                    continue
+            
 
-            print("THERE IS NO MORE DATA IN DATA_IN_MEMORY")
-            current_threads = 2
-            print(current_threads)
+            # print("THERE IS NO MORE DATA IN DATA_IN_MEMORY")
+            # current_threads +=1 
+            # barrier = threading.Barrier(current_threads)
+            # print(current_threads)
+
+            # mutex = threading.Lock()
 
             # while True:
-            #     if current_candle == 'DONE':
+            #     # with mutex:
+            #     my_candle = current_candle
+            #     barrier.wait() 
+            #     if my_candle == 'DONE':
             #         break
             #     try:
-            #         client_socket.send(current_candle.encode('utf-8'))
+            #         client_socket.send(my_candle.encode('utf-8'))
             #     except Exception as e:
             #         print("Ocurrió un error al enviar datos al cliente:", str(e))
+                
 
 
 
@@ -91,11 +102,13 @@ def handle_client(client_socket, data_queue, index_market, data_in_memory):
         print("I AM THE FIRST CLIENT")
 
         while True:
-            current_candle = data_queue.get()
-            if current_candle == 'DONE':
+            data = data_queue.get()
+            # current_candle = data
+            # barrier.wait()
+            if data == 'DONE':
                 break
             try:
-                client_socket.send(current_candle.encode('utf-8'))
+                client_socket.send(data.encode('utf-8'))
             except Exception as e:
                 print("Ocurrió un error al enviar datos al cliente:", str(e))
 
