@@ -7,33 +7,44 @@ import threading
 clients = 0
 clients_lock = threading.Lock()
 
-current_candle = ""
-current_threads = 0 
-barrier = threading.Barrier(current_threads)
+# current_candle = ""
+# current_threads = 0 
+# barrier = threading.Barrier(current_threads)
+
+first = False
+second = False
+
+
+
+
+
+
+
 
 
 def handle_client(client_socket, data_queue, index_market, data_in_memory):
     
-    global clients, clients_lock, current_candle, current_threads, barrier
+    global clients, clients_lock, first, second
     
 
     with clients_lock:
         clients += 1
     print(f"CLIENT NUMBER = {clients}")
 
-    if clients > 9:
+    if clients > 9 and first:
         print("THIS IS NOT THE FIRST CLIENT")
 
-
-        if clients > 18:
+        
+        if clients > 18 and first and second:
             print("THIS IS NOT THE FIRST/SECOND CLIENT")
+            
 
             for data in data_in_memory:
                 # print(index_market, "->", "index = ", data[1], "date = ", data[0])
                 file_index = data[1]
                 candle = linecache.getline("monedas.txt", file_index)
                 if candle:
-                    print(index_market, "->", "index = ", data[1], "date = ", data[0], "\n", candle)
+                    # print(index_market, "->", "index = ", data[1], "date = ", data[0], "\n", candle)
                     client_socket.send(candle.encode('utf-8'))
                     time.sleep(0.01)
 
@@ -73,6 +84,9 @@ def handle_client(client_socket, data_queue, index_market, data_in_memory):
 
         else:
             print("I AM THE SECOND CLIENT")
+            second = True
+           
+
             
             with open("monedas.txt", 'r') as f_in:
                 # next(f_in) 
@@ -100,6 +114,10 @@ def handle_client(client_socket, data_queue, index_market, data_in_memory):
     else:
 
         print("I AM THE FIRST CLIENT")
+        first = True
+        print(clients)
+        print(first)
+        print(second)
 
         while True:
             data = data_queue.get()
@@ -112,9 +130,9 @@ def handle_client(client_socket, data_queue, index_market, data_in_memory):
             except Exception as e:
                 print("Ocurrió un error al enviar datos al cliente:", str(e))
 
-    with clients_lock:
-        clients -= 1
-    client_socket.close()
+    # with clients_lock:
+    #     clients -= 1
+    # client_socket.close()
 
         
     
@@ -123,6 +141,7 @@ def handle_client(client_socket, data_queue, index_market, data_in_memory):
 
 
 def connect_to_client(host, port, data_queue, index_market, data_in_memory, client_connected):
+
     
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((host, port))
@@ -136,7 +155,8 @@ def connect_to_client(host, port, data_queue, index_market, data_in_memory, clie
         print(f"Succesfuly connected {addr}")
 
         client_connected.set()
-        
+
+    
 
         client_thread = threading.Thread(target=handle_client, args=(client_socket, data_queue, index_market, data_in_memory))
         client_thread.start()
